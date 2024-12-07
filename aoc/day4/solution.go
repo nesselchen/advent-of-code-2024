@@ -68,7 +68,6 @@ func (Solver) SolveSecond(lines input.Lines) int {
 		if lines.At(x, y) != 'A' {
 			continue
 		}
-		// positions are offset because iteration starts at 1
 		var (
 			topLeft  = lines.At(x-1, y-1)
 			botRight = lines.At(x+1, y+1)
