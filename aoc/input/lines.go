@@ -110,6 +110,18 @@ func (lines Lines) WithOffset(skip int) iter.Seq2[int, int] {
 	}
 }
 
+func (lines Lines) Flatten() []byte {
+	var totalLen int
+	for _, line := range lines {
+		totalLen += len(line)
+	}
+	flattened := make([]byte, 0, totalLen)
+	for x, y := range lines.Points() {
+		flattened = append(flattened, lines.At(x, y))
+	}
+	return flattened
+}
+
 func (lines Lines) String() string {
 	buf := new(bytes.Buffer)
 	for _, line := range lines {
