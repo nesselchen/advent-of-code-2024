@@ -48,10 +48,11 @@ func (Solver) SolveSecond(lines input.Lines) int {
 func checkAndFixAll(rules map[int64][]int64, pages [][]int64) int {
 	var sum int
 	for _, p := range pages {
-		if !valid(rules, p) {
-			fix(rules, p)
-			sum += int(p[len(p)/2])
+		if valid(rules, p) {
+			continue
 		}
+		fix(rules, p)
+		sum += int(p[len(p)/2])
 	}
 	return sum
 }
