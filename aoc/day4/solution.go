@@ -1,5 +1,7 @@
 package day4
 
+import "github.com/nesselchen/aoc-2024/aoc/input"
+
 type Solver struct{}
 
 const (
@@ -7,7 +9,7 @@ const (
 	samx = "SAMX"
 )
 
-func (Solver) SolveFirst(lines []string) int {
+func (Solver) SolveFirst(lines input.Lines) int {
 	var count int
 	for line, l := range lines {
 		for i := range l {
@@ -18,7 +20,7 @@ func (Solver) SolveFirst(lines []string) int {
 }
 
 // determine whether to look for a word and for which one
-func checkPos(lines []string, line, i int) (count int) {
+func checkPos(lines input.Lines, line, i int) (count int) {
 	var target string
 	switch lines[line][i] {
 	case xmas[0]:
@@ -38,7 +40,7 @@ func checkPos(lines []string, line, i int) (count int) {
 }
 
 // line, i determine position and dl, di the direction in which to look
-func checkDirection(lines []string, target string, line, dl, i, di int) int {
+func checkDirection(lines input.Lines, target string, line, dl, i, di int) int {
 	w, h := len(lines[line]), len(lines)
 	offset := len(target) - 1
 
@@ -57,31 +59,29 @@ func checkDirection(lines []string, target string, line, dl, i, di int) int {
 	return 1
 }
 
-func (Solver) SolveSecond(lines []string) int {
+func (Solver) SolveSecond(lines input.Lines) int {
 	var (
 		count int
 		diff  byte = 'S' - 'M'
 	)
-	for lineNum, line := range lines[1 : len(lines)-1] {
-		for i, c := range line[1 : len(line)-1] {
-			if c != 'A' {
-				continue
-			}
-			// positions are offset because iteration starts at 1
-			var (
-				topLeft  = lines[lineNum][i]
-				botRight = lines[lineNum+2][i+2]
-				topRight = lines[lineNum][i+2]
-				botLeft  = lines[lineNum+2][i]
-			)
-			if abs(topLeft, botRight) != diff {
-				continue
-			}
-			if abs(topRight, botLeft) != diff {
-				continue
-			}
-			count++
+	for x, y := range lines.WithOffset(1) {
+		if lines.At(x, y) != 'A' {
+			continue
 		}
+		// positions are offset because iteration starts at 1
+		var (
+			topLeft  = lines.At(x-1, y-1)
+			botRight = lines.At(x+1, y+1)
+			topRight = lines.At(x+1, y-1)
+			botLeft  = lines.At(x-1, y+1)
+		)
+		if abs(topLeft, botRight) != diff {
+			continue
+		}
+		if abs(topRight, botLeft) != diff {
+			continue
+		}
+		count++
 	}
 
 	return count

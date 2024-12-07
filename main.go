@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/nesselchen/aoc-2024/aoc"
+	"github.com/nesselchen/aoc-2024/aoc/input"
 )
 
 func main() {
@@ -37,9 +38,9 @@ func main() {
 	defer f.Close()
 
 	sc := bufio.NewScanner(f)
-	var lines []string
+	var lines input.Lines
 	for sc.Scan() {
-		lines = append(lines, sc.Text())
+		lines = append(lines, []byte(sc.Text()))
 	}
 
 	// run solver
@@ -47,10 +48,10 @@ func main() {
 	fst := s.SolveFirst(lines)
 	fmt.Print(fst)
 
-	if s, ok := s.(aoc.AdvancedSolver); ok {
+	if s, ok := s.(aoc.PartTwoSolver); ok {
 		snd := s.SolveSecond(lines)
 		fmt.Print(" / ", snd)
 	}
-
+	//
 	fmt.Println()
 }
