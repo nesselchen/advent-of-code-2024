@@ -29,7 +29,7 @@ func main() {
 	}
 
 	// load and split data
-	path := fmt.Sprintf("aoc/day%d/data.txt", day)
+	path := fmt.Sprintf("aoc/day%d/input.txt", day)
 	f, err := os.Open(path)
 	if err != nil {
 		fmt.Println("Failed to read input file")
@@ -44,13 +44,14 @@ func main() {
 	}
 
 	// run solver
-	fmt.Printf("Day %d: ", day)
 	fst := s.SolveFirst(lines)
+
+	fmt.Printf("Day %d: ", day)
 	fmt.Print(fst)
 
 	if s, ok := s.(aoc.PartTwoSolver); ok {
 		snd := s.SolveSecond(lines)
-		fmt.Print(" / ", snd)
+		fmt.Print(" | ", snd)
 	}
 	//
 	fmt.Println()

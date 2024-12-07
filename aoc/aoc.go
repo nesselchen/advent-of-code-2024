@@ -2,6 +2,7 @@ package aoc
 
 import (
 	"github.com/nesselchen/aoc-2024/aoc/day4"
+	"github.com/nesselchen/aoc-2024/aoc/day5"
 	"github.com/nesselchen/aoc-2024/aoc/input"
 )
 
@@ -16,4 +17,5 @@ type PartTwoSolver interface {
 
 var Solvers = map[int]BaseSolver{
 	4: day4.Solver{},
+	5: day5.Solver{},
 }
