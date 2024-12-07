@@ -38,6 +38,40 @@ func valid(rules map[int64][]int64, page []int64) bool {
 	return true
 }
 
+// Part 2
+
+func (Solver) SolveSecond(lines input.Lines) int {
+	rules, pages := parseInput(lines)
+	return checkAndFixAll(rules, pages)
+}
+
+func checkAndFixAll(rules map[int64][]int64, pages [][]int64) int {
+	var sum int
+	for _, p := range pages {
+		if !valid(rules, p) {
+			fix(rules, p)
+			sum += int(p[len(p)/2])
+		}
+	}
+	return sum
+}
+
+var first = false
+
+func fix(rules map[int64][]int64, page []int64) []int64 {
+	for i := range page {
+		n := page[0]
+		for j := 0; j < len(page)-i-1; j++ {
+			if slices.Contains(rules[n], page[j+1]) {
+				n = page[j+1]
+				continue
+			}
+			page[j], page[j+1] = page[j+1], page[j]
+		}
+	}
+	return page
+}
+
 // Used by both
 
 func parseInput(lines input.Lines) (map[int64][]int64, [][]int64) {
