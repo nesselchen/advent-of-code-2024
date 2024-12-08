@@ -74,10 +74,10 @@ func (Solver) Second(lines input.Lines) int {
 			topRight = lines.At(x+1, y-1)
 			botLeft  = lines.At(x-1, y+1)
 		)
-		if abs(topLeft, botRight) != diff {
+		if absDiff(topLeft, botRight) != diff {
 			continue
 		}
-		if abs(topRight, botLeft) != diff {
+		if absDiff(topRight, botLeft) != diff {
 			continue
 		}
 		count++
@@ -86,7 +86,7 @@ func (Solver) Second(lines input.Lines) int {
 	return count
 }
 
-func abs(a, b byte) byte {
+func absDiff(a, b byte) byte {
 	if a < b {
 		return b - a
 	}
