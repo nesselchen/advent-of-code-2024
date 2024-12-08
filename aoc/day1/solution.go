@@ -19,6 +19,26 @@ func (Solver) First(lines input.Lines) int {
 	return totalDistances
 }
 
+func absDiff(a, b int) int {
+	if a > b {
+		return a - b
+	}
+	return b - a
+}
+
+func (Solver) Second(lines input.Lines) int {
+	var score int
+	left, right := parse(lines)
+	counts := make(map[int]int)
+	for _, n := range right {
+		counts[n] = counts[n] + 1
+	}
+	for _, n := range left {
+		score += counts[n] * n
+	}
+	return score
+}
+
 func parse(lines input.Lines) ([]int, []int) {
 	var left, right []int
 	for _, line := range lines {
@@ -27,11 +47,4 @@ func parse(lines input.Lines) ([]int, []int) {
 		right = append(right, input.ParseInt(rn))
 	}
 	return left, right
-}
-
-func absDiff(a, b int) int {
-	if a > b {
-		return a - b
-	}
-	return b - a
 }
