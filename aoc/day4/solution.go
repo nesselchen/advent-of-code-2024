@@ -9,7 +9,7 @@ const (
 	samx = "SAMX"
 )
 
-func (Solver) SolveFirst(lines input.Lines) int {
+func (Solver) First(lines input.Lines) int {
 	var count int
 	for line, l := range lines {
 		for i := range l {
@@ -59,7 +59,7 @@ func checkDirection(lines input.Lines, target string, line, dl, i, di int) int {
 	return 1
 }
 
-func (Solver) SolveSecond(lines input.Lines) int {
+func (Solver) Second(lines input.Lines) int {
 	var (
 		count int
 		diff  byte = 'S' - 'M'

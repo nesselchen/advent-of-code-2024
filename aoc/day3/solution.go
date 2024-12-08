@@ -10,7 +10,7 @@ import (
 
 type Solver struct{}
 
-func (Solver) SolveFirst(lines input.Lines) int {
+func (Solver) First(lines input.Lines) int {
 	var count int
 	for _, line := range lines {
 		count += sumMuls(line)
@@ -18,7 +18,7 @@ func (Solver) SolveFirst(lines input.Lines) int {
 	return count
 }
 
-func (Solver) SolveSecond(lines input.Lines) int {
+func (Solver) Second(lines input.Lines) int {
 	var count int
 	enabledChunks := strings.Split(string(lines.Flatten()), "do()")
 	for _, chunk := range enabledChunks {

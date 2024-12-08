@@ -2,7 +2,6 @@ package day5
 
 import (
 	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/nesselchen/aoc-2024/aoc/input"
@@ -12,12 +11,12 @@ type Solver struct{}
 
 // Part 1
 
-func (Solver) SolveFirst(lines input.Lines) int {
+func (Solver) First(lines input.Lines) int {
 	rules, pages := parseInput(lines)
 	return solveAll(rules, pages)
 }
 
-func solveAll(rules map[int64][]int64, pages [][]int64) int {
+func solveAll(rules map[int][]int, pages [][]int) int {
 	var sum int
 	for _, p := range pages {
 		if valid(rules, p) {
@@ -27,7 +26,7 @@ func solveAll(rules map[int64][]int64, pages [][]int64) int {
 	return sum
 }
 
-func valid(rules map[int64][]int64, page []int64) bool {
+func valid(rules map[int][]int, page []int) bool {
 	for i, n := range page {
 		for _, bad := range rules[n] {
 			if slices.Contains(page[:i], bad) {
@@ -40,12 +39,12 @@ func valid(rules map[int64][]int64, page []int64) bool {
 
 // Part 2
 
-func (Solver) SolveSecond(lines input.Lines) int {
+func (Solver) Second(lines input.Lines) int {
 	rules, pages := parseInput(lines)
 	return checkAndFixAll(rules, pages)
 }
 
-func checkAndFixAll(rules map[int64][]int64, pages [][]int64) int {
+func checkAndFixAll(rules map[int][]int, pages [][]int) int {
 	var sum int
 	for _, p := range pages {
 		if valid(rules, p) {
@@ -59,7 +58,7 @@ func checkAndFixAll(rules map[int64][]int64, pages [][]int64) int {
 
 var first = false
 
-func fix(rules map[int64][]int64, page []int64) []int64 {
+func fix(rules map[int][]int, page []int) []int {
 	for i := range page {
 		n := page[0]
 		for j := 0; j < len(page)-i-1; j++ {
@@ -75,35 +74,25 @@ func fix(rules map[int64][]int64, page []int64) []int64 {
 
 // Used by both
 
-func parseInput(lines input.Lines) (map[int64][]int64, [][]int64) {
-	rules := make(map[int64][]int64)
+func parseInput(lines input.Lines) (map[int][]int, [][]int) {
+	rules := make(map[int][]int)
 	pagesStart := 0
 	for i, l := range lines {
 		if len(l) == 0 {
 			pagesStart = i + 1
 			break
 		}
-		splits := strings.SplitN(string(l), "|", 2)
-		fst, snd := splits[0], splits[1]
-		before, err := strconv.ParseInt(fst, 10, 64)
-		if err != nil {
-			panic("Day 5: parsing error")
-		}
-		after, err := strconv.ParseInt(snd, 10, 64)
-		if err != nil {
-			panic("Day 5: parsing error")
-		}
+		fst, snd, _ := input.SplitOnce(string(l), "|")
+		before := input.ParseInt(fst)
+		after := input.ParseInt(snd)
 		rules[before] = append(rules[before], after)
 	}
-	pages := make([][]int64, 0)
+	pages := make([][]int, 0)
 	for i, l := range lines[pagesStart:] {
 		splits := strings.Split(string(l), ",")
-		pages = append(pages, make([]int64, 0))
+		pages = append(pages, make([]int, 0))
 		for _, s := range splits {
-			n, err := strconv.ParseInt(s, 10, 64)
-			if err != nil {
-				panic("Day 5: parsing error")
-			}
+			n := input.ParseInt(s)
 			pages[i] = append(pages[i], n)
 		}
 	}
