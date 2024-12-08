@@ -1,6 +1,9 @@
 package day4
 
-import "github.com/nesselchen/aoc-2024/aoc/input"
+import (
+	"github.com/nesselchen/aoc-2024/aoc/input"
+	"github.com/nesselchen/aoc-2024/aoc/ops"
+)
 
 type Solver struct{}
 
@@ -62,22 +65,22 @@ func checkDirection(lines input.Lines, target string, line, dl, i, di int) int {
 func (Solver) Second(lines input.Lines) int {
 	var (
 		count int
-		diff  byte = 'S' - 'M'
+		diff  = int('S' - 'M')
 	)
 	for x, y := range lines.WithOffset(1) {
 		if lines.At(x, y) != 'A' {
 			continue
 		}
 		var (
-			topLeft  = lines.At(x-1, y-1)
-			botRight = lines.At(x+1, y+1)
-			topRight = lines.At(x+1, y-1)
-			botLeft  = lines.At(x-1, y+1)
+			topLeft  = int(lines.At(x-1, y-1))
+			botRight = int(lines.At(x+1, y+1))
+			topRight = int(lines.At(x+1, y-1))
+			botLeft  = int(lines.At(x-1, y+1))
 		)
-		if absDiff(topLeft, botRight) != diff {
+		if ops.AbsDiff(topLeft, botRight) != diff {
 			continue
 		}
-		if absDiff(topRight, botLeft) != diff {
+		if ops.AbsDiff(topRight, botLeft) != diff {
 			continue
 		}
 		count++

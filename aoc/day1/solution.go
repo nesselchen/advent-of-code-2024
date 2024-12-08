@@ -4,6 +4,7 @@ import (
 	"slices"
 
 	"github.com/nesselchen/aoc-2024/aoc/input"
+	"github.com/nesselchen/aoc-2024/aoc/ops"
 )
 
 type Solver struct{}
@@ -14,16 +15,9 @@ func (Solver) First(lines input.Lines) int {
 	slices.Sort(left)
 	slices.Sort(right)
 	for i := range left {
-		totalDistances += absDiff(left[i], right[i])
+		totalDistances += ops.AbsDiff(left[i], right[i])
 	}
 	return totalDistances
-}
-
-func absDiff(a, b int) int {
-	if a > b {
-		return a - b
-	}
-	return b - a
 }
 
 func (Solver) Second(lines input.Lines) int {
