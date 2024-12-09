@@ -69,6 +69,10 @@ func (lines Lines) At(x, y int) byte {
 	return lines[y][x]
 }
 
+func (lines Lines) Set(x, y int, v byte) {
+	lines[y][x] = v
+}
+
 func (lines Lines) Transposed() Lines {
 	if !lines.HasConstantWidth() {
 		panic("(input.Lines).Transpose: Cannot call method if lines have different lengths")
