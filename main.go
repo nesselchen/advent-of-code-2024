@@ -49,7 +49,7 @@ func main() {
 		}
 
 		// run solver
-		fst := s.First(lines)
+		fst := s.First(lines.Copy()) // copy to allow mutation on the input
 		fmt.Print(fst)
 		if s, ok := s.(aoc.PartTwoSolver); ok {
 			snd := s.Second(lines)

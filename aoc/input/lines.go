@@ -134,3 +134,12 @@ func (lines Lines) String() string {
 	}
 	return buf.String()
 }
+
+func (lines Lines) Copy() Lines {
+	out := make(Lines, lines.Height())
+	for i := range out {
+		out[i] = make([]byte, lines.Width())
+		copy(out[i], lines[i])
+	}
+	return out
+}
