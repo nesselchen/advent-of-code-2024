@@ -138,7 +138,7 @@ func (lines Lines) String() string {
 func (lines Lines) Copy() Lines {
 	out := make(Lines, lines.Height())
 	for i := range out {
-		out[i] = make([]byte, lines.Width())
+		out[i] = make([]byte, len(lines[i]))
 		copy(out[i], lines[i])
 	}
 	return out
